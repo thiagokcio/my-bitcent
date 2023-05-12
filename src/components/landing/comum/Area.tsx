@@ -12,7 +12,7 @@ export default function Area (props: AreaProps) {
         `}>
             <div className={`
                 px-7 xl:px-0
-                w-full xl:x-[1200px]
+                w-full xl:w-[1200px]
             `}>
                 {props.children}
             </div>

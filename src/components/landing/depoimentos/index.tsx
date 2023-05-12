@@ -1,9 +1,9 @@
 import Area from "../comum/Area";
 
-export default function Destaque () {
+export default function Depoimentos () {
     return (
         <Area>
-           Destaque 
+            
         </Area>
     )
 }

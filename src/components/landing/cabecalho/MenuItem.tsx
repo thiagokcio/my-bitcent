@@ -1,3 +1,5 @@
+import Link from "next/link"
+
 interface MenuItemProps {
     children: any
     url?: string
@@ -17,4 +19,8 @@ export default function MenuItem (props: MenuItemProps) {
             </div>
         )
     }
+
+    return props.url ? (
+        <Link href={props.url ?? ''}>{renderizarBotao()}</Link>
+    ) : renderizarBotao()
 }
