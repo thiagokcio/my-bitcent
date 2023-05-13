@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Cabecalho from "../template/Cabecalho";
 import Conteudo from "../template/Conteudo";
 import Pagina from "../template/Pagina";
@@ -10,27 +10,13 @@ import NaoEncontrado from "../template/NaoEncontrado";
 import Id from "@/logic/core/comum/Id";
 import { Button } from "@mantine/core";
 import { IconPlus } from "@tabler/icons-react";
+import AutenticacaoContext from "@/data/contexts/AutenticacaoContext";
+import servicos from "@/logic/core";
+import useTransacao from "@/data/hooks/useTransacao";
 
 export default function Financas() {
 
-  const [transacoes, setTransacoes] = useState<Transacao[]>(transacoesFalsas);
-  const [transacao, setTransacao] = useState<Transacao | null>(null);
-
-  function salvar (transacao: Transacao) {
-      const outrasTransacoes = transacoes.filter(t => t.id !== transacao.id)
-      setTransacoes([...outrasTransacoes, {
-        ...transacao,
-        id: transacao.id ?? Id.novo()
-      }])
-      
-      setTransacao(null)
-  }
-  
-  function excluir (transacao: Transacao) {
-      const outrasTransacoes = transacoes.filter(t => t.id !== transacao.id)
-      setTransacoes(outrasTransacoes)
-      setTransacao(null)
-  }
+  const { transacoes, transacao, selecionar, salvar, excluir} = useTransacao()
 
   return (
     <Pagina>
@@ -38,7 +24,7 @@ export default function Financas() {
       <Conteudo className="gap-5">
         <Button className="bg-blue-500"
                 leftIcon={<IconPlus/>}
-                onClick={() => setTransacao(transacaoVazia)}>
+                onClick={() => selecionar(transacaoVazia)}>
           Nova Transação
         </Button>
         
@@ -47,12 +33,12 @@ export default function Financas() {
             transacao={transacao}
             salvar={salvar}
             excluir={excluir}
-            cancelar={() => setTransacao(null)}
+            cancelar={() => selecionar(null)}
           />
         ) : transacoes.length ? (
           <Lista 
             transacoes={transacoes} 
-            selecionarTransacao={setTransacao} 
+            selecionarTransacao={selecionar} 
           />
         ) : (
           <NaoEncontrado>Nenhuma transação encontrada.</NaoEncontrado>
