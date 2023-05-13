@@ -1,12 +1,12 @@
-import usuario from "@/data/constants/usuarioFalso";
+import AutenticacaoContext from "@/data/contexts/AutenticacaoContext";
 import { Avatar, Menu } from "@mantine/core";
 import { IconArrowsRightLeft, IconLogout, IconUser } from "@tabler/icons-react";
 import Link from "next/link";
+import { useContext } from "react";
 
 export default function MenuUsuario() {
-  function logout() {
-    alert("Usuario Deslogado");
-  }
+
+  const { usuario, logout } = useContext(AutenticacaoContext)
 
   return (
     <Menu>
