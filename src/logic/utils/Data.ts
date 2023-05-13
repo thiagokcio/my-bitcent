@@ -20,6 +20,17 @@ export default class Data {
         },
     }
 
+    static ddmm = {
+        formatar(dt: Date): string {
+            return dt?.toLocaleDateString?.(
+                Data._lingua, {
+                    day: '2-digit',
+                    month: 'short',
+                } as Intl.DateTimeFormatOptions
+            )
+        }
+    }
+
     static meses() {
         return Array(12).fill(0).map((_, i) => new Date(2000, i, 1)
             .toLocaleDateString(Data._lingua, { month: 'short' })

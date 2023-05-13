@@ -5,33 +5,63 @@ import { transacaoVazia } from "@/logic/core/financas/Transacao";
 import Lista from "./Lista";
 import Formulario from "./Formulario";
 import NaoEncontrado from "../template/NaoEncontrado";
-import { Button } from "@mantine/core";
-import { IconPlus } from "@tabler/icons-react";
-import useTransacao from "@/data/hooks/useTransacao";
+import { Button, SegmentedControl } from "@mantine/core";
+import { IconLayoutGrid, IconList, IconPlus } from "@tabler/icons-react";
+import useTransacao, { TipoExibicao } from "@/data/hooks/useTransacao";
 import CampoMesAno from "../template/CampoMesAno";
+import Grade from "./Grade";
 
 export default function Financas() {
-  const { 
-    data, alterarData, transacoes, transacao, selecionar, salvar, excluir 
+  const {
+    data,
+    alterarData,
+    tipoExibicao,
+    alterarExibicao,
+    transacoes,
+    transacao,
+    selecionar,
+    salvar,
+    excluir,
   } = useTransacao();
 
-  return (
-    <Pagina>
-      <Cabecalho />
-      <Conteudo className="gap-5">
-        <div className="flex justify-between">
-          <CampoMesAno
-            data={data}
-            dataMudou={alterarData}  
-          />
+  function renderizarControles() {
+    return (
+      <div className="flex justify-between">
+        <CampoMesAno data={data} dataMudou={alterarData} />
+        <div className="flex gap-5">
           <Button
             className="bg-blue-500"
             leftIcon={<IconPlus />}
             onClick={() => selecionar(transacaoVazia)}
           >
-            Nova Transação
+            Nova transação
           </Button>
+          <SegmentedControl
+            data={[
+              { label: <IconList />, value: "lista" },
+              { label: <IconLayoutGrid />, value: "grade" },
+            ]}
+            onChange={(tipo) => alterarExibicao(tipo as TipoExibicao)}
+          />
         </div>
+      </div>
+    );
+  }
+
+  function renderizarTransacoes() {
+    const props = { transacoes, selecionarTransacao: selecionar };
+    return tipoExibicao === "lista" ? (
+      <Lista {...props} />
+    ) : (
+      <Grade {...props} />
+    );
+  }
+
+  return (
+    <Pagina>
+      <Cabecalho />
+      <Conteudo className="gap-5">
+        {renderizarControles()}
 
         {transacao ? (
           <Formulario
@@ -41,9 +71,11 @@ export default function Financas() {
             cancelar={() => selecionar(null)}
           />
         ) : transacoes.length ? (
-          <Lista transacoes={transacoes} selecionarTransacao={selecionar} />
+          renderizarTransacoes()
         ) : (
-          <NaoEncontrado>Nenhuma transação encontrada.</NaoEncontrado>
+          <NaoEncontrado>
+            Nenhuma transação encontrada.
+          </NaoEncontrado>
         )}
       </Conteudo>
     </Pagina>
