@@ -13,15 +13,8 @@ import Grade from "./Grade";
 
 export default function Financas() {
   const {
-    data,
-    alterarData,
-    tipoExibicao,
-    alterarExibicao,
-    transacoes,
-    transacao,
-    selecionar,
-    salvar,
-    excluir,
+    data, alterarData, tipoExibicao, alterarExibicao,
+    transacoes, transacao, selecionar, salvar, excluir
   } = useTransacao();
 
   function renderizarControles() {

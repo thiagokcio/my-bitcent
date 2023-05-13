@@ -4,19 +4,18 @@ import Usuario from "@/logic/core/usuario/Usuario";
 import { TextInput } from "@mantine/core";
 import Texto from "@/logic/utils/Texto";
 import Cpf from "@/logic/utils/Cpf";
-import Telefone from "@/logic/utils/Telefone"
+import Telefone from "@/logic/utils/Telefone";
 import { useContext, useEffect } from "react";
 import AutenticacaoContext from "@/data/contexts/AutenticacaoContext";
 
-export default function Formularios () {
-
+export default function Formularios() {
     const { usuario, atualizarUsuario } = useContext(AutenticacaoContext)
     const { dados, alterarAtributo, alterarDados } = useFormulario<Usuario>()
 
     useEffect(() => {
         if(!usuario) return
         alterarDados(usuario)
-    }, [usuario])
+    }, [usuario, alterarDados])
 
     async function salvar() {
         if(!usuario) return
@@ -27,8 +26,8 @@ export default function Formularios () {
         <div className="flex flex-col gap-5 mt-7">
             <MiniFormulario
                 titulo="Seu Nome"
-                descricao="Esse é o nome usado pela plataforma em todas as suas interações."
-                msgRodape="O nome deve possuir entre 3 e 80 caracteres." 
+                descricao="Como você gostaria de ser chamado?"
+                msgRodape="O nome deve possuir entre 3 e 80 caracteres, mais que isso já é um texto!"
                 podeSalvar={Texto.entre(dados.nome, 3, 80)}
                 salvar={salvar}
             >
@@ -39,8 +38,8 @@ export default function Formularios () {
             </MiniFormulario>
             <MiniFormulario
                 titulo="CPF"
-                descricao="O seu CPF é usado internamente pelo sistema."
-                msgRodape="Seus dados estarão seguros." 
+                descricao="Seu CPF é usado internamente pelo sistema."
+                msgRodape="Pode relaxar, daqui ele não sai!"
                 podeSalvar={true}
                 salvar={salvar}
             >
@@ -52,7 +51,7 @@ export default function Formularios () {
             <MiniFormulario
                 titulo="Telefone"
                 descricao="Usado para notificações importantes sobre a sua conta."
-                msgRodape="Se receber ligação a cobrar, não foi a gente." 
+                msgRodape="Se receber ligação a cobrar, não foi a gente!"
                 podeSalvar={true}
                 salvar={salvar}
             >
@@ -61,7 +60,6 @@ export default function Formularios () {
                     onChange={alterarAtributo('telefone', Telefone.desformatar)}
                 />
             </MiniFormulario>
-                
         </div>
     )
 }
