@@ -1,33 +1,38 @@
-import { useContext, useState } from "react";
 import Cabecalho from "../template/Cabecalho";
 import Conteudo from "../template/Conteudo";
 import Pagina from "../template/Pagina";
-import Transacao, { transacaoVazia } from "@/logic/core/financas/Transacao";
-import transacoesFalsas from "@/data/constants/transacoesFalsas";
+import { transacaoVazia } from "@/logic/core/financas/Transacao";
 import Lista from "./Lista";
 import Formulario from "./Formulario";
 import NaoEncontrado from "../template/NaoEncontrado";
-import Id from "@/logic/core/comum/Id";
 import { Button } from "@mantine/core";
 import { IconPlus } from "@tabler/icons-react";
-import AutenticacaoContext from "@/data/contexts/AutenticacaoContext";
-import servicos from "@/logic/core";
 import useTransacao from "@/data/hooks/useTransacao";
+import CampoMesAno from "../template/CampoMesAno";
 
 export default function Financas() {
-
-  const { transacoes, transacao, selecionar, salvar, excluir} = useTransacao()
+  const { 
+    data, alterarData, transacoes, transacao, selecionar, salvar, excluir 
+  } = useTransacao();
 
   return (
     <Pagina>
       <Cabecalho />
       <Conteudo className="gap-5">
-        <Button className="bg-blue-500"
-                leftIcon={<IconPlus/>}
-                onClick={() => selecionar(transacaoVazia)}>
-          Nova Transação
-        </Button>
-        
+        <div className="flex justify-between">
+          <CampoMesAno
+            data={data}
+            dataMudou={alterarData}  
+          />
+          <Button
+            className="bg-blue-500"
+            leftIcon={<IconPlus />}
+            onClick={() => selecionar(transacaoVazia)}
+          >
+            Nova Transação
+          </Button>
+        </div>
+
         {transacao ? (
           <Formulario
             transacao={transacao}
@@ -36,10 +41,7 @@ export default function Financas() {
             cancelar={() => selecionar(null)}
           />
         ) : transacoes.length ? (
-          <Lista 
-            transacoes={transacoes} 
-            selecionarTransacao={selecionar} 
-          />
+          <Lista transacoes={transacoes} selecionarTransacao={selecionar} />
         ) : (
           <NaoEncontrado>Nenhuma transação encontrada.</NaoEncontrado>
         )}
