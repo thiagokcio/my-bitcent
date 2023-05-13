@@ -25,7 +25,7 @@ export interface Filtro {
 }
 
 export default class Colecao {
-    
+
     async salvar(caminho: string, entidade: any, id?: string): Promise<any> {
         const db = getFirestore(app)
         const idFinal = id ?? entidade.id ?? Id.novo()
