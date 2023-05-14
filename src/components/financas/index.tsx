@@ -10,6 +10,7 @@ import { IconLayoutGrid, IconList, IconPlus } from "@tabler/icons-react";
 import useTransacao, { TipoExibicao } from "@/data/hooks/useTransacao";
 import CampoMesAno from "../template/CampoMesAno";
 import Grade from "./Grade";
+import Sumario from "./Sumario";
 
 export default function Financas() {
   const {
@@ -54,6 +55,7 @@ export default function Financas() {
     <Pagina>
       <Cabecalho />
       <Conteudo className="gap-5">
+        <Sumario transacoes={transacoes}/>
         {renderizarControles()}
 
         {transacao ? (
