@@ -1,6 +1,10 @@
+import AutenticacaoContext from "@/data/contexts/AutenticacaoContext"
 import { IconArrowRight, IconVideo } from "@tabler/icons-react"
+import { useContext } from "react"
 
 export default function Slogan() {
+
+    const { loginGoogle } = useContext(AutenticacaoContext)
 
 function renderizarFrase() {
         return (
@@ -49,12 +53,13 @@ function renderizarFrase() {
                     bg-gradient-to-r from-indigo-600 to-cyan-600
                     text-white px-5 py-2.5 rounded-md
                 `}>
-                    <span className="font-thin md:text-sm text-base">
+                    <span className="font-thin md:text-sm text-base"
+                    onClick={loginGoogle}>
                         Iniciar <span className="hidden sm:inline">Agora</span>
                     </span>
                     <IconArrowRight className="hidden lg:inline" stroke={1} />
                 </div>
-                <div className={`
+                {/* <div className={`
                     flex items-center gap-2 cursor-pointer
                     text-zinc-300 px-5 py-2.5
                 `}>
@@ -62,7 +67,7 @@ function renderizarFrase() {
                     <span className="font-thin md:text-sm text-base">
                         <span className="hidden sm:inline">Assista o</span> Vídeo
                     </span>
-                </div>
+                </div> */}
             </div>
         </div>
     )
