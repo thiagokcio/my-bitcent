@@ -79,10 +79,3 @@ Bitcent é uma aplicação web para controle de finanças pessoais com landing p
 Projeto foi desenvolvido durante a **[Semana Tranformação.DEV](https://transformacao.dev/)**, que ocorreu nos dias 8 a 12 de Maio de 2023.
 
 
-## License
-
-Esse projeto está sob a [licença MIT](LICENSE.md).
-
----
-
-Cod3r com ❤️ -  [Nossa Comunidade no Discord](https://discord.gg/JexVkcc3vr)
